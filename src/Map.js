@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react'
 import { GoogleMap, LoadScript  } from '@react-google-maps/api';
 import { Marker } from '@react-google-maps/api';
 
@@ -14,6 +13,9 @@ function Map({center,markers}) {
             position: {
                 lat: venue.location.lat,
                 lng: venue.location.lng
+            },
+            animation:{
+                animation:true
             }
         }
         return <Marker key={venue.id} {...marker} />
@@ -21,7 +23,7 @@ function Map({center,markers}) {
    
     return (
         <LoadScript
-            googleMapsApiKey="AIzaSyBPgPC57PYZCJ3ZFypu0osA6S8aTubikTg"
+            googleMapsApiKey=""
         >
             <GoogleMap
                 mapContainerStyle={containerStyle}
