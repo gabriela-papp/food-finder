@@ -15,9 +15,8 @@ function Navbar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" >
-                        Food Finder
+                        Place Finder
                         </Typography>
-                    <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
         </div>
