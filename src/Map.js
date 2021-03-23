@@ -23,7 +23,7 @@ function Map({center,markers}) {
    
     return (
         <LoadScript
-            googleMapsApiKey="AIzaSyBPgPC57PYZCJ3ZFypu0osA6S8aTubikTg"
+            googleMapsApiKey=""
         >
             <GoogleMap
                 mapContainerStyle={containerStyle}
