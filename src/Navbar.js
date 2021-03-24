@@ -1,24 +1,72 @@
-import React from 'react'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import React,{useState} from 'react'
+import TextField from '@material-ui/core/TextField';
+import { ImFacebook, ImInstagram, ImPinterest, ImArrowDown2} from "react-icons/im";
+import { IoMdHeartEmpty} from "react-icons/io";
+import { HiOutlineSearch} from "react-icons/hi";
+import { FaTimes } from 'react-icons/fa';
 
-function Navbar() {
+
+const Navbar=()=> {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+       
+        
+    }
+    const closeModal = () => {
+        setIsModalOpen(false);
+    }
+
     return (
         <div>
-            <AppBar title='Food Finder' style={{ backgroundColor:'#2fc2b5'}}>
-                <Toolbar>
-                    <IconButton edge="start"  color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" >
-                        Place Finder
-                        </Typography>
-                </Toolbar>
-            </AppBar>
+            {isModalOpen ? (
+                <div className='modal'>
+                    <div className="modal-container">
+                        <h3>WHAT ARE YOU LOOKING FOR?</h3>
+                        <input id="standard-basic" value="Search products..."/>
+                        <button className="close-modal-btn" onClick={closeModal}>
+                            <FaTimes />
+                        </button>
+                    </div>
+                </div>
+            ):null}
+            
+            <div className='small-nav'>
+                <div className='small-nav-left'>
+                    <h3>PLACE FINDER | An Official Place Finder App</h3>
+                </div>
+                <div className='small-nav-right'>
+                    <ul>
+                        <li><ImFacebook /></li>
+                        <li><ImInstagram /></li>
+                        <li><ImPinterest /></li>
+                    </ul>
+                </div>
+            </div>
+            <div className='medium-nav'>
+                <div className='medium-nav-left'>
+                    <button>PLACE FINDER</button>
+                </div>
+                <div className='medium-nav-right'>
+                    <p><IoMdHeartEmpty/></p>
+                </div>
+            </div>
+            <div>
+                <nav className='nav'>
+                    <div className='nav-left'>
+                        <ul>
+                            <li>HOME</li>
+                            <li> BY CATEGORY <span><ImArrowDown2 /></span></li>
+                        </ul>
+                    </div>
+                    <div className='nav-right' onClick={openModal}>
+                        <li >SEARCH <span><HiOutlineSearch/></span></li>
+                    </div>
+                </nav>
+         
+            </div>
+            
         </div>
     )
 }
