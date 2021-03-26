@@ -1,14 +1,15 @@
 import { GoogleMap, LoadScript  } from '@react-google-maps/api';
 import { Marker } from '@react-google-maps/api';
-
+import { useGlobalContext } from './context';
 
 const containerStyle = {
     width: '100%',
     height: '500px'
 };
-function Map({center,markers}) {
+function Map({center}) {
+    const { venues } = useGlobalContext();
 
-    const mapMarkers = markers.map((venue, i) => {
+    const mapMarkers = venues.map((venue, i) => {
         const marker = {
             position: {
                 lat: venue.location.lat,

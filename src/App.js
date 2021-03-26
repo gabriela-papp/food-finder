@@ -1,17 +1,16 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Main from './Main'
-import { useGlobalContext } from './context';
+import Footer from './Footer'
 import './App.css';
 
-function App() {
-  const { venues, location} = useGlobalContext();
-  
+function App() {  
   
   return (
     <div className="App">
       <Navbar/>
-      <Main location={location} venues={venues}/>
+      <Main/>
+      <Footer/>
     </div>
   );
 }

@@ -32,6 +32,9 @@
   margin-top: 12px;
   cursor: pointer;
 }
+.small-nav-right > ul > li:hover {
+  color: #141414;
+}
 .medium-nav {
   height: 80px;
   display: flex;
@@ -57,6 +60,9 @@
   margin-right: 50px;
   margin-top: 28px;
 }
+.medium-nav-right > p:hover {
+  color: #797676;
+}
 .nav {
   display: flex;
   justify-content: space-between;
@@ -66,6 +72,9 @@
   font-size: 17px;
   font-weight: 400;
   cursor: pointer;
+}
+.nav-left {
+  position: relative;
 }
 .nav-left > ul {
   display: flex;
@@ -149,11 +158,17 @@
   cursor: pointer;
 }
 .cat-modal {
+  position: absolute;
   width: 100%;
   background: whitesmoke;
   text-align: left;
+  visibility: hidden;
+  z-index: 10;
+}
+.cat-modal:hover {
   visibility: visible;
-  z-index: 1;
+
+  transition: 3s ease-in-out;
 }
 .cat-modal-container {
   width: 80%;
@@ -182,4 +197,91 @@
 .categories-list > li:hover {
   color: white;
   background-color: #129e9e;
+}
+.info-suggest {
+  background-color: #ffffff;
+}
+.empty-section {
+  height: 30px;
+  border-bottom: 1px solid lightgray;
+}
+.info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: auto;
+
+  padding: 20px 50px;
+  color: #797676;
+  border-bottom: 1px solid lightgray;
+}
+.info-section {
+  display: flex;
+  gap: 15px;
+  padding-left: 7px;
+}
+.info-section > i {
+  font-size: 30px;
+  color: #129e9e;
+}
+.info-section > p {
+  font-size: 13px;
+}
+.info-section > p > span {
+  color: #129e9e;
+  font-size: 13px;
+}
+.footer {
+  height: 230px;
+  background-color: #141414;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-top: 50px;
+  padding-left: 70px;
+}
+.footer-section > h1 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 400;
+  padding-bottom: 20px;
+}
+.footer-section > p {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 200;
+}
+.footer-section > ul > li {
+  list-style: none;
+  color: #129e9e;
+  font-size: 15px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.follow-info {
+  display: flex;
+}
+.follow-info > i {
+  color: #ffffff;
+  font-size: 17px;
+  margin-right: 8px;
+  margin-top: 2px;
+}
+.follow-info > p {
+  color: #129e9e;
+}
+.follow-info > p:hover {
+  color: #ffffff;
+}
+.footer-section > ul > li:hover {
+  color: #ffffff;
+}
+.copyright {
+  font-size: 11px;
+  font-weight: 100;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  padding-top: 40px;
+}
+.copyright > p > span {
+  color: #129e9e;
+  font-weight: 400;
 }

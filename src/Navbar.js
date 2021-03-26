@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import axios from 'axios';
 import { useGlobalContext } from './context';
 import { ImFacebook, ImInstagram, ImPinterest, ImArrowDown2} from "react-icons/im";
@@ -8,11 +8,21 @@ import { FaTimes } from 'react-icons/fa';
 
 
 const Navbar=()=> {
-    const { setVenues, location } = useGlobalContext();
+    const { input, setInput, onTextSubmit} = useGlobalContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isCatModalOpen, setCatIsModalOpen] = useState(false);
     const [categories, setCategories] = useState([])
-    const [input, setInput] = useState('')
+    
+    useEffect(()=>{
+        axios.get(`https://api.foursquare.co/v2/venues/categories?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&v=20189988`)
+            .then(res => {
+                const categories = res.data.response.categories;
+                setCategories(categories)
+                console.log(categories)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    },[])
 
     const openModal = () => {
         setIsModalOpen(true); 
@@ -20,41 +30,7 @@ const Navbar=()=> {
     const closeModal = () => {
         setIsModalOpen(false);
     }
-    
-    const closeCatModal = () => {
-        setCatIsModalOpen(false);
-    }
-
-    const getCategoriesModal=(e)=>{
-        setCatIsModalOpen(true)
-        getCategories();
-    }
-    const onTextSubmit = (e) => {
-        axios.get(`https://api.foursquare.com/v2/venues/search?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&ll=${location.lat},${location.lng}&query=${input}&v=20189988&limit=10`)
-            .then(res => {
-                const venues = res.data.response.venues;
-
-                setVenues(venues)
-                console.log(venues);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    const getCategories = () => {
-        axios.get(`https://api.foursquare.com/v2/venues/categories?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&v=20189988`)
-            .then(res => {
-                const categories = res.data.response.categories;
-                setCategories(categories)
-
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-
+   
     const categList = categories.map((cat, index) => {
         return <li style={{ listStyle: 'none' }} key={index}>
                 {cat.name}
@@ -64,7 +40,7 @@ const Navbar=()=> {
     return (
         <div>
             {isModalOpen ? (
-                <div className='modal'>
+                <div className='modal' onClick={onTextSubmit}>
                     <div className="modal-container">
                         <h3>WHAT ARE YOU LOOKING FOR?</h3>
                         <input id="standard-basic" value={input} placeholder='Search places...' onChange={e => setInput(e.target.value)}/>
@@ -97,11 +73,11 @@ const Navbar=()=> {
                 </div>
             </div>
             <div>
-                <nav className='nav'>
-                    <div className='nav-left'>
+                <nav className='nav' >
+                    <div className='nav-left' >
                         <ul>
                             <li>HOME</li>
-                            <li onMouseOver={getCategoriesModal} > BY CATEGORY <span><ImArrowDown2 /></span></li>
+                            <li > BY CATEGORY <span><ImArrowDown2 /></span></li>
                         </ul>
                     </div>
                  
@@ -109,8 +85,7 @@ const Navbar=()=> {
                         <li >SEARCH <span><HiOutlineSearch/></span></li>
                     </div>
                 </nav>
-                {isCatModalOpen ? (
-                    <div className='cat-modal' onMouseLeave={closeCatModal}>
+                    <div className='cat-modal' >
                         <div className="cat-modal-container">
                             <h3>CATEGORIES</h3>
                             <ul className="categories-list">
@@ -118,7 +93,7 @@ const Navbar=()=> {
                             </ul>
                         </div>
                     </div>
-                ) : null}
+
             </div>
             
         </div>
