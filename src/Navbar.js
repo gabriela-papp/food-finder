@@ -8,8 +8,7 @@ import { FaTimes } from 'react-icons/fa';
 
 
 const Navbar=()=> {
-    const { input, setInput, onTextSubmit} = useGlobalContext();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { input, setInput, onTextSubmit, openModal, closeModal, isModalOpen} = useGlobalContext();
     const [categories, setCategories] = useState([])
     
     useEffect(()=>{
@@ -23,13 +22,6 @@ const Navbar=()=> {
                 console.log(err)
             })
     },[])
-
-    const openModal = () => {
-        setIsModalOpen(true); 
-    }
-    const closeModal = () => {
-        setIsModalOpen(false);
-    }
    
     const categList = categories.map((cat, index) => {
         return <li style={{ listStyle: 'none' }} key={index}>
@@ -40,10 +32,10 @@ const Navbar=()=> {
     return (
         <div>
             {isModalOpen ? (
-                <div className='modal' onClick={onTextSubmit}>
+                <div className='modal' >
                     <div className="modal-container">
                         <h3>WHAT ARE YOU LOOKING FOR?</h3>
-                        <input id="standard-basic" value={input} placeholder='Search places...' onChange={e => setInput(e.target.value)}/>
+                        <input id="standard-basic" value={input} placeholder='Search places...' onChange={e => setInput(e.target.value)} onClick={onTextSubmit}/>
                         <button className="close-modal-btn" onClick={closeModal}>
                             <FaTimes />
                         </button>

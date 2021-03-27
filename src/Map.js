@@ -4,10 +4,10 @@ import { useGlobalContext } from './context';
 
 const containerStyle = {
     width: '100%',
-    height: '500px'
+    height: '400px'
 };
 function Map({center}) {
-    const { venues } = useGlobalContext();
+    const { venues, recommendedVenueId } = useGlobalContext();
 
     const mapMarkers = venues.map((venue, i) => {
         const marker = {
@@ -19,7 +19,8 @@ function Map({center}) {
                 animation:true
             }
         }
-        return <Marker key={venue.id} {...marker} />
+            return <Marker key={venue.id} {...marker} onClick={()=>alert(venue.id)}/>
+      
     })
    
     return (

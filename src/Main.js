@@ -2,6 +2,7 @@ import React from 'react'
 import { useGlobalContext } from './context';
 import Restaurant from './Restaurant'
 import Map from './Map'
+import RecommendedVenues from './RecommendedVenues'
 import { ImShare } from "react-icons/im";
 import { AiFillContacts } from "react-icons/ai";
 import { IoMdHeartEmpty } from "react-icons/io";
@@ -34,6 +35,7 @@ function Main() {
                 </div>
             </div>
             <Restaurant venues={venues}/>
+            <RecommendedVenues/>
     </div>
     )
 }
