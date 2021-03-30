@@ -161,8 +161,9 @@
   position: absolute;
   width: 100%;
   background: whitesmoke;
+
   text-align: left;
-  visibility: hidden;
+  visibility: visible;
   z-index: 10;
 }
 .cat-modal:hover {
@@ -197,6 +198,7 @@
 .categories-list > li:hover {
   color: white;
   background-color: #129e9e;
+  cursor: pointer;
 }
 .info-suggest {
   background-color: #ffffff;

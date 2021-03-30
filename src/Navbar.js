@@ -8,23 +8,22 @@ import { FaTimes } from 'react-icons/fa';
 
 
 const Navbar=()=> {
-    const { input, setInput, onTextSubmit, openModal, closeModal, isModalOpen} = useGlobalContext();
+    const { input, setInput, onTextSubmit, openModal, closeModal, isModalOpen, handleCategory} = useGlobalContext();
     const [categories, setCategories] = useState([])
     
     useEffect(()=>{
-        axios.get(`https://api.foursquare.co/v2/venues/categories?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&v=20189988`)
+        axios.get(`https://api.foursquare.com/v2/venues/categories?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&v=20189988`)
             .then(res => {
                 const categories = res.data.response.categories;
                 setCategories(categories)
-                console.log(categories)
             })
             .catch(err => {
                 console.log(err)
             })
     },[])
    
-    const categList = categories.map((cat, index) => {
-        return <li style={{ listStyle: 'none' }} key={index}>
+    const categList = categories.map((cat) => {
+        return <li style={{ listStyle: 'none' }} key={cat.id} onClick={()=>handleCategory(cat.id)}>
                 {cat.name}
                </li>
     })
@@ -35,7 +34,8 @@ const Navbar=()=> {
                 <div className='modal' >
                     <div className="modal-container">
                         <h3>WHAT ARE YOU LOOKING FOR?</h3>
-                        <input id="standard-basic" value={input} placeholder='Search places...' onChange={e => setInput(e.target.value)} onClick={onTextSubmit}/>
+                        <input id="standard-basic" value={input} placeholder='Search places...' onChange={e => setInput(e.target.value)} />
+                        <button type="submit" onClick={onTextSubmit}>submit</button>
                         <button className="close-modal-btn" onClick={closeModal}>
                             <FaTimes />
                         </button>

@@ -9,6 +9,7 @@ const AppProvider = ({ children }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [recommendedVenues, setRecommendedVenues] = useState([])
     const [recommendedVenueId, setRecommendedVenueId] = useState([])
+    const [getByCategory,setGetByCategory]=useState([])
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -37,7 +38,7 @@ const AppProvider = ({ children }) => {
     }
 
     const onTextSubmit = (e) => {
-      //  e.preventDefault()
+        e.preventDefault()
         axios.get(`https://api.foursquare.com/v2/venues/search?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&ll=${location.lat},${location.lng}&query=${input}&v=20189988&limit=9`)
             .then(res => {
                 const venues = res.data.response.venues;
@@ -59,6 +60,18 @@ const AppProvider = ({ children }) => {
     const closeModal = () => {
         setIsModalOpen(false);
     }
+    const handleCategory =(id)=>{
+        axios.get(`https://api.foursquare.com/v2/venues/${id}/similar`)
+            .then(res => {
+                const byCategory = res.data.response.venues;
+
+                setGetByCategory(byCategory)
+                console.log(getByCategory)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     return <AppContext.Provider value={{
         venues,
@@ -71,7 +84,8 @@ const AppProvider = ({ children }) => {
         closeModal,
         isModalOpen,
         recommendedVenues,
-        getVenueId
+        getVenueId,
+        handleCategory
     }}>
         {children}
     </AppContext.Provider>
