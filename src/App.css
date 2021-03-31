@@ -161,18 +161,13 @@
   position: absolute;
   width: 100%;
   background: whitesmoke;
-
   text-align: left;
-  visibility: visible;
   z-index: 10;
 }
-.cat-modal:hover {
-  visibility: visible;
-
-  transition: 3s ease-in-out;
-}
 .cat-modal-container {
+  position: relative;
   width: 80%;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   padding: 20px 0;

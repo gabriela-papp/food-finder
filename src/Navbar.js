@@ -8,7 +8,7 @@ import { FaTimes } from 'react-icons/fa';
 
 
 const Navbar=()=> {
-    const { input, setInput, onTextSubmit, openModal, closeModal, isModalOpen, handleCategory} = useGlobalContext();
+    const { input, setInput, onTextSubmit, openModal, closeModal, openCatModal, closeCatModal, isCatModalOpen , isModalOpen, handleCategory} = useGlobalContext();
     const [categories, setCategories] = useState([])
     
     useEffect(()=>{
@@ -32,15 +32,15 @@ const Navbar=()=> {
         <div>
             {isModalOpen ? (
                 <div className='modal' >
-                    <div className="modal-container">
+                    <form className="modal-container" onSubmit={e=>onTextSubmit(e)}>
                         <h3>WHAT ARE YOU LOOKING FOR?</h3>
                         <input id="standard-basic" value={input} placeholder='Search places...' onChange={e => setInput(e.target.value)} />
-                        <button type="submit" onClick={onTextSubmit}>submit</button>
-                        <button className="close-modal-btn" onClick={closeModal}>
+                        
+                        <button className="close-modal-btn" type="button" onClick={closeModal}>
                             <FaTimes />
                         </button>
                          {console.log(input)}
-                    </div>
+                    </form>
                 </div>
             ):null}
             
@@ -69,7 +69,7 @@ const Navbar=()=> {
                     <div className='nav-left' >
                         <ul>
                             <li>HOME</li>
-                            <li > BY CATEGORY <span><ImArrowDown2 /></span></li>
+                            <li onMouseEnter={openCatModal} > BY CATEGORY <span><ImArrowDown2 /></span></li>
                         </ul>
                     </div>
                  
@@ -77,7 +77,8 @@ const Navbar=()=> {
                         <li >SEARCH <span><HiOutlineSearch/></span></li>
                     </div>
                 </nav>
-                    <div className='cat-modal' >
+                    {isCatModalOpen ? (
+                <div className='cat-modal' onMouseLeave={closeCatModal}>
                         <div className="cat-modal-container">
                             <h3>CATEGORIES</h3>
                             <ul className="categories-list">
@@ -85,7 +86,8 @@ const Navbar=()=> {
                             </ul>
                         </div>
                     </div>
-
+                    ) : null}
+                    
             </div>
             
         </div>

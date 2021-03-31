@@ -7,6 +7,7 @@ const AppProvider = ({ children }) => {
     const [input, setInput] = useState('')
     const [location, setLocation] = useState({ lat: null, lng: null })
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCatModalOpen, setIsCatModalOpen] = useState(false);
     const [recommendedVenues, setRecommendedVenues] = useState([])
     const [recommendedVenueId, setRecommendedVenueId] = useState([])
     const [getByCategory,setGetByCategory]=useState([])
@@ -38,15 +39,12 @@ const AppProvider = ({ children }) => {
     }
 
     const onTextSubmit = (e) => {
-        e.preventDefault()
+       e.preventDefault()
         axios.get(`https://api.foursquare.com/v2/venues/search?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&ll=${location.lat},${location.lng}&query=${input}&v=20189988&limit=9`)
             .then(res => {
                 const venues = res.data.response.venues;
-
                 setVenues(venues)
                 setInput('')
-                console.log(venues);
-                
             })
             .catch(err => {
                 console.log(err)
@@ -60,10 +58,16 @@ const AppProvider = ({ children }) => {
     const closeModal = () => {
         setIsModalOpen(false);
     }
+    const openCatModal = () => {
+        setIsCatModalOpen(true);
+    }
+    const closeCatModal = () => {
+        setIsCatModalOpen(false);
+    }
     const handleCategory =(id)=>{
-        axios.get(`https://api.foursquare.com/v2/venues/${id}/similar`)
+        axios.get(`https://api.foursquare.com/v2/venues/similar?${id}&client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G`)
             .then(res => {
-                const byCategory = res.data.response.venues;
+                const byCategory = res.data.response;
 
                 setGetByCategory(byCategory)
                 console.log(getByCategory)
@@ -82,6 +86,9 @@ const AppProvider = ({ children }) => {
          setInput,
         openModal,
         closeModal,
+        openCatModal,
+        closeCatModal,
+        isCatModalOpen,
         isModalOpen,
         recommendedVenues,
         getVenueId,
