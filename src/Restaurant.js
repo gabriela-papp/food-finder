@@ -1,14 +1,14 @@
 import React from 'react'
-import { useGlobalContext } from './context';
-import { ImLocation } from "react-icons/im";
+import { useGlobalContext } from './context'
+import { ImLocation } from 'react-icons/im'
 
 function Restaurant() {
-    const { venues } = useGlobalContext();
+  const { venues } = useGlobalContext()
 
-    return (
-        <div className='restaurant-wrapper'>
-            <div className='restaurant-inner'>
-                {venues.map((venue,id)=>(
+  return (
+    <div className="restaurant-wrapper">
+      <div className="restaurant-inner">
+        {/* {venues.map((venue,id)=>(
                     <div className='restaurant-item'>
                         <h1 key={id}>{venue.name}</h1>
                         <div>
@@ -20,10 +20,10 @@ function Restaurant() {
                             </div>
                         </div>
                     </div>
-                    ))}
-            </div>
-        </div>
-    )
+                    ))} */}
+      </div>
+    </div>
+  )
 }
 
 export default Restaurant

@@ -7,22 +7,28 @@ const containerStyle = {
   height: '400px',
 }
 function Map({ center }) {
-  const { venues, recommendedVenueId } = useGlobalContext()
+  const {
+    venues,
+    recommendedVenueId,
+    setCoordinates,
+    setBounds,
+    coordinates,
+  } = useGlobalContext()
   const coords = { lat: 0, lng: 0 }
   const { REACT_APP_GOOGLE_MAPS_API } = process.env
 
-  const mapMarkers = venues.map((venue, i) => {
-    const marker = {
-      position: {
-        lat: venue.location.lat,
-        lng: venue.location.lng,
-      },
-      animation: {
-        animation: true,
-      },
-    }
-    return <Marker key={venue.id} {...marker} />
-  })
+  //   const mapMarkers = venues.map((venue, i) => {
+  //     const marker = {
+  //       position: {
+  //         lat: venue.location.lat,
+  //         lng: venue.location.lng,
+  //       },
+  //       animation: {
+  //         animation: true,
+  //       },
+  //     }
+  //     return <Marker key={venue.id} {...marker} />
+  //   })
 
   return (
     <div style={containerStyle}>
@@ -33,10 +39,13 @@ function Map({ center }) {
         center={center}
         defaultZoom={11}
         options={''}
-        onChange={''}
+        onChange={(e) => {
+          setCoordinates({ lat: e.center.lat, lng: e.center.lng })
+          setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
+        }}
         onChildClick={''}
       >
-        <div>{mapMarkers}</div>
+        {/* <div>{mapMarkers}</div> */}
       </GoogleMapReact>
     </div>
   )

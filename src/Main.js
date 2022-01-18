@@ -8,11 +8,11 @@ import { AiFillContacts } from 'react-icons/ai'
 import { IoMdHeartEmpty } from 'react-icons/io'
 
 function Main() {
-  const { location, venues } = useGlobalContext()
+  const { coordinates, venues } = useGlobalContext()
 
   return (
     <div>
-      <Map center={location} markers={venues} />
+      <Map center={coordinates} markers={venues} />
       <div className="info-suggest">
         <div className="empty-section"></div>
         <div className="info">

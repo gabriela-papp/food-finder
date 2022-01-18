@@ -3,45 +3,49 @@ import axios from 'axios'
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-  const [venues, setVenues] = useState([])
+  const [venues, setVenues] = useState({})
   const [input, setInput] = useState('')
-  const [location, setLocation] = useState({ lat: null, lng: null })
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCatModalOpen, setIsCatModalOpen] = useState(false)
   const [recommendedVenues, setRecommendedVenues] = useState([])
   const [recommendedVenueId, setRecommendedVenueId] = useState([])
   const [getByCategory, setGetByCategory] = useState([])
+  const [coordinates, setCoordinates] = useState({})
+  const [bounds, setBounds] = useState(null)
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        })
-      })
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          setCoordinates({
+            lat: latitude,
+            lng: longitude,
+          })
+        },
+      )
     }
   }, [])
 
   const URL =
     'https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary'
-  var options = {
-    params: {
-      bl_latitude: '11.847676',
-      tr_latitude: '12.838442',
-      bl_longitude: '109.095887',
-      tr_longitude: '109.149359',
-    },
-    headers: {
-      'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-      'x-rapidapi-key': 'b9a7e73397msh978d4b617a4ff92p13c79ejsn03bd956de277',
-    },
-  }
-  const getPlacesData = async () => {
+
+  const getPlacesData = async (sw, ne) => {
     try {
       const {
         data: { data },
-      } = await axios.get(URL, options)
+      } = await axios.get(URL, {
+        params: {
+          bl_latitude: sw.lat,
+          tr_latitude: ne.lat,
+          bl_longitude: sw.lng,
+          tr_longitude: ne.lng,
+        },
+        headers: {
+          'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
+          'x-rapidapi-key':
+            'b9a7e73397msh978d4b617a4ff92p13c79ejsn03bd956de277',
+        },
+      })
       return data
     } catch (error) {
       console.log(error)
@@ -49,29 +53,32 @@ const AppProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    getPlacesData()
-  }, [])
+    getPlacesData(bounds.sw, bounds.ne).then((data) => {
+      console.log(data)
+      setVenues(data)
+    })
+  }, [bounds])
 
   const getVenueId = (id) => {
     setRecommendedVenueId(id)
     alert(recommendedVenueId)
   }
 
-  const onTextSubmit = (e) => {
-    e.preventDefault()
-    axios
-      .get(
-        `https://api.foursquare.com/v2/venues/search?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&ll=${location.lat},${location.lng}&query=${input}&v=20189988&limit=9`,
-      )
-      .then((res) => {
-        const venues = res.data.response.venues
-        setVenues(venues)
-        setInput('')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  //   const onTextSubmit = (e) => {
+  //     e.preventDefault()
+  //     axios
+  //       .get(
+  //         `https://api.foursquare.com/v2/venues/search?client_id=LIEUSSAMWMOVTOT2NMXPTPQ1VJ5UIESU3EJKN53JV4QIKMZL&client_secret=FURPJP2L1EQJHTT3Y05RAEJOOLBPXTMALC1OJ3NQ2LAHYT5G&ll=${location.lat},${location.lng}&query=${input}&v=20189988&limit=9`,
+  //       )
+  //       .then((res) => {
+  //         const venues = res.data.response.venues
+  //         setVenues(venues)
+  //         setInput('')
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
+  //   }
 
   const openModal = () => {
     setIsModalOpen(true)
@@ -106,8 +113,7 @@ const AppProvider = ({ children }) => {
       value={{
         venues,
         setVenues,
-        location,
-        onTextSubmit,
+        // onTextSubmit,
         input,
         setInput,
         openModal,
@@ -119,6 +125,10 @@ const AppProvider = ({ children }) => {
         recommendedVenues,
         getVenueId,
         handleCategory,
+        coordinates,
+        setCoordinates,
+        bounds,
+        setBounds,
       }}
     >
       {children}
