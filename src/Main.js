@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from './context'
 import Restaurant from './Restaurant'
 import Map from './Map'
@@ -8,11 +8,20 @@ import { AiFillContacts } from 'react-icons/ai'
 import { IoMdHeartEmpty } from 'react-icons/io'
 
 function Main() {
-  const { coordinates, venues } = useGlobalContext()
+  const { coordinates, getPlacesData } = useGlobalContext()
+  const [bounds, setBounds] = useState(null)
+  const [venues, setVenues] = useState({})
+
+  useEffect(() => {
+    getPlacesData(bounds.sw, bounds.ne).then((data) => {
+      console.log(data)
+      setVenues(data)
+    })
+  }, [bounds, getPlacesData])
 
   return (
     <div>
-      <Map center={coordinates} markers={venues} />
+      <Map center={coordinates} markers={venues} setBounds={setBounds} />
       <div className="info-suggest">
         <div className="empty-section"></div>
         <div className="info">

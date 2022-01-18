@@ -3,7 +3,6 @@ import axios from 'axios'
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-  const [venues, setVenues] = useState({})
   const [input, setInput] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCatModalOpen, setIsCatModalOpen] = useState(false)
@@ -11,7 +10,6 @@ const AppProvider = ({ children }) => {
   const [recommendedVenueId, setRecommendedVenueId] = useState([])
   const [getByCategory, setGetByCategory] = useState([])
   const [coordinates, setCoordinates] = useState({})
-  const [bounds, setBounds] = useState(null)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -51,13 +49,6 @@ const AppProvider = ({ children }) => {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    getPlacesData(bounds.sw, bounds.ne).then((data) => {
-      console.log(data)
-      setVenues(data)
-    })
-  }, [bounds])
 
   const getVenueId = (id) => {
     setRecommendedVenueId(id)
@@ -111,8 +102,6 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        venues,
-        setVenues,
         // onTextSubmit,
         input,
         setInput,
@@ -127,8 +116,7 @@ const AppProvider = ({ children }) => {
         handleCategory,
         coordinates,
         setCoordinates,
-        bounds,
-        setBounds,
+        getPlacesData,
       }}
     >
       {children}

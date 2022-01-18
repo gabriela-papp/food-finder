@@ -6,15 +6,13 @@ const containerStyle = {
   width: '100%',
   height: '400px',
 }
-function Map({ center }) {
+function Map({ center, setBounds }) {
   const {
     venues,
     recommendedVenueId,
     setCoordinates,
-    setBounds,
     coordinates,
   } = useGlobalContext()
-  const coords = { lat: 0, lng: 0 }
   const { REACT_APP_GOOGLE_MAPS_API } = process.env
 
   //   const mapMarkers = venues.map((venue, i) => {
@@ -35,7 +33,7 @@ function Map({ center }) {
       <GoogleMapReact
         mapContainerStyle={containerStyle}
         bootstrapURLKeys={{ key: REACT_APP_GOOGLE_MAPS_API }}
-        defaultCenter={coords}
+        defaultCenter={coordinates}
         center={center}
         defaultZoom={11}
         options={''}
