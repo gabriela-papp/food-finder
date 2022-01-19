@@ -13,12 +13,12 @@ function Main() {
   const [venues, setVenues] = useState({})
 
   useEffect(() => {
-    getPlacesData(bounds.sw, bounds.ne).then((data) => {
-      console.log(data)
+    getPlacesData().then((data) => {
       setVenues(data)
     })
-  }, [bounds, getPlacesData])
+  }, [getPlacesData])
 
+  console.log(venues)
   return (
     <div>
       <Map center={coordinates} markers={venues} setBounds={setBounds} />
@@ -55,7 +55,9 @@ function Main() {
         </div>
         <div className="suggest"></div>
       </div>
-      <Restaurant venues={venues} />
+      <div className="restaurant-item">
+        <Restaurant venues={venues} />
+      </div>
       <RecommendedVenues />
     </div>
   )
