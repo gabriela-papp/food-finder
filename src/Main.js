@@ -21,7 +21,7 @@ function Main() {
   console.log(venues)
   return (
     <div>
-      <Map center={coordinates} markers={venues} setBounds={setBounds} />
+      <Map center={coordinates} venues={venues} setBounds={setBounds} />
       <div className="info-suggest">
         <div className="empty-section"></div>
         <div className="info">

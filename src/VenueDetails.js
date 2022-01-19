@@ -28,11 +28,15 @@ function VenueDetails({ venue }) {
         <Typography gutterBottom variant="h5">
           {venue.name}
         </Typography>
-        <Box>
+        <Box display="flex" justifyContent="space-between">
+          <Rating value={Number(venue.rating)} read-only />
+          <Typography> out of {venue.num_reviews} reviews</Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
           <Typography>Price</Typography>
           <Typography>{venue.price_level}</Typography>
         </Box>
-        <Box>
+        <Box display="flex" justifyContent="space-between">
           <Typography>Ranking</Typography>
           <Typography>{venue.ranking}</Typography>
         </Box>
@@ -43,6 +47,12 @@ function VenueDetails({ venue }) {
           <Typography gutterBottom variant="body2">
             <LocationOnOutlinedIcon />
             {venue.address}
+          </Typography>
+        )}
+        {venue?.phone && (
+          <Typography gutterBottom variant="body2">
+            <PhoneIcon />
+            {venue.phone}
           </Typography>
         )}
       </CardContent>
