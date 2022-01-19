@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from './context'
-import Restaurant from './Restaurant'
+import Venues from './Venues'
 import Map from './Map'
 import RecommendedVenues from './RecommendedVenues'
 import { ImShare } from 'react-icons/im'
@@ -10,7 +10,7 @@ import { IoMdHeartEmpty } from 'react-icons/io'
 function Main() {
   const { coordinates, getPlacesData } = useGlobalContext()
   const [bounds, setBounds] = useState(null)
-  const [venues, setVenues] = useState({})
+  const [venues, setVenues] = useState([])
 
   useEffect(() => {
     getPlacesData().then((data) => {
@@ -56,7 +56,7 @@ function Main() {
         <div className="suggest"></div>
       </div>
       <div className="restaurant-item">
-        <Restaurant venues={venues} />
+        <Venues venues={venues} />
       </div>
       <RecommendedVenues />
     </div>
