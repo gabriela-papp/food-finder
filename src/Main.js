@@ -11,6 +11,7 @@ function Main() {
   const { coordinates, getPlacesData } = useGlobalContext()
   const [bounds, setBounds] = useState(null)
   const [venues, setVenues] = useState([])
+  const [childClicked, setChildClicked] = useState(null)
 
   useEffect(() => {
     getPlacesData().then((data) => {
@@ -21,7 +22,12 @@ function Main() {
   console.log(venues)
   return (
     <div>
-      <Map center={coordinates} venues={venues} setBounds={setBounds} />
+      <Map
+        center={coordinates}
+        venues={venues}
+        setBounds={setBounds}
+        setChildClicked={setChildClicked}
+      />
       <div className="info-suggest">
         <div className="empty-section"></div>
         <div className="info">
@@ -56,7 +62,7 @@ function Main() {
         <div className="suggest"></div>
       </div>
       <div className="restaurant-item">
-        <Venues venues={venues} />
+        <Venues venues={venues} childClicked={childClicked} />
       </div>
       <RecommendedVenues />
     </div>

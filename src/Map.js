@@ -9,7 +9,7 @@ const containerStyle = {
   width: '100%',
   height: '400px',
 }
-function Map({ center, venues, setBounds }) {
+function Map({ center, venues, setBounds, setChildClicked }) {
   const { recommendedVenueId, setCoordinates, coordinates } = useGlobalContext()
   const isDesktop = useMediaQuery(`(min-width:600px)`)
   const { REACT_APP_GOOGLE_MAPS_API } = process.env
@@ -40,7 +40,7 @@ function Map({ center, venues, setBounds }) {
           setCoordinates({ lat: e.center.lat, lng: e.center.lng })
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
         }}
-        onChildClick={''}
+        onChildClick={(child) => setChildClicked(child)}
       >
         {venues?.map((venue) => (
           <div lat={Number(venue.latitude)} lng={Number(venue.longitude)}>

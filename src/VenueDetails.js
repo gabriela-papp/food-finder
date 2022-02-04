@@ -12,11 +12,11 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined'
 import PhoneIcon from '@material-ui/icons/Phone'
 import Rating from '@material-ui/lab/Rating'
 
-function VenueDetails({ venue }) {
+function VenueDetails({ venue, selected, refProp }) {
   return (
     <Card>
       <CardMedia
-        style={{ height: 350 }}
+        style={{ height: 200 }}
         image={
           venue.photo
             ? venue.photo.images.large.url
